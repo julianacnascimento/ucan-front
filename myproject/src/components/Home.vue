@@ -11,12 +11,12 @@
               <h3 class="login-heading mb-4">{{msg}}</h3>
               <form>
                 <div class="form-label-group">
-                  <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                  <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus v-model="usuario.email">
                   <label for="inputEmail">Email </label>
                 </div>
 
                 <div class="form-label-group">
-                  <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                  <input type="password" id="inputPassword" class="form-control" placeholder="Password" required v-model="usuario.senha">
                   <label for="inputPassword">Senha</label>
 
                 </div>
@@ -43,14 +43,30 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: 'Home',
-  data () {
+  data: function () {
     return {
-      msg: 'Bem vindo ao Ucan!'
+      msg: 'ucan',
+      usuario: {
+        email: '',
+        senha: ''
+      },
+      message: ''
+    }
+  },
+  methods: {
+    login: function () {
+      axios.post('http://127.0.0.1:3000/auth', this.usuario)
+        .then(response => {
+          localStorage.setItem('token', response.data.token)
+          this.message = response.data.message
+        }
+        )
+        .catch(e => { this.message = 'Erro' })
     }
   }
-  
 }
 </script>
 
@@ -64,7 +80,6 @@ export default {
   color: #007bff;
   font-family:Impact;
   font-size: 50px;
-  
 }
 
 .login,
@@ -75,7 +90,7 @@ export default {
 .bg-image {
   background-size: cover;
   background-position: center;
-  background-image: url('https://i.pinimg.com/736x/4e/f8/54/4ef854bc4b175486c776ca25dbb1f935.jpg'); 
+  background-image: url('https://mir-s3-cdn-cf.behance.net/project_modules/disp/54513064384865.5ad04aa41636c.jpg');
 }
 
 .login-heading {
@@ -86,21 +101,20 @@ export default {
   font-size: 0.9rem;
   letter-spacing: 0.05rem;
   padding: 0.75rem 1rem;
-  border-radius: .1.5rem;
+  border-radius: .7rem;
   margin-top: 20px;
 }
 
 .form-label-group {
   position: relative;
   margin-bottom: 1.5rem;
- 
 }
 
 .form-label-group>input,
 .form-label-group>label {
   padding: var(--input-padding-y) var(--input-padding-x);
   height: 50px;
-  border-radius: .2rem;
+  border-radius: .7rem;
   margin-top: 10px
 }
 
@@ -114,20 +128,17 @@ export default {
   /* Override default `<label>` margin */
   line-height: .1.5;
   /* color: #495057; */
-  color: #007bff;
+  color: #969899;
   cursor: text;
   /* Match the input under the label */
   border: .1rem solid transparent;
   border-radius: .25rem;
   transition: all .1s ease-in-out;
   /* border-block-end-color: #007bff; */
-  
-  
 }
 
 .form-label-group input::-webkit-input-placeholder {
   color: transparent;
-  
 }
 
 .form-label-group input:-ms-input-placeholder {
@@ -150,7 +161,6 @@ export default {
   padding-top: calc(var(--input-padding-y) + var(--input-padding-y) * (2 / 3));
   padding-bottom: calc(var(--input-padding-y) / 3);
   font-size: 20px;
-  
 }
 
 .form-label-group input:not(:placeholder-shown)~label {
@@ -165,6 +175,4 @@ export default {
   margin: 1px;
 }
 
-
 </style>
-
