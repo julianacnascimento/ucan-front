@@ -7,8 +7,11 @@ yarn-error.log*
 /test/unit/coverage/
 /test/e2e/reports/
 selenium-debug.log
+<<<<<<< HEAD
 build/
 config/
+=======
+>>>>>>> c88aa1e387605ee8487891a616e73bae51f02741
 
 # Editor directories and files
 .idea
