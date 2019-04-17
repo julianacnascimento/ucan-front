@@ -25,11 +25,13 @@
                   <input type="checkbox" class="custom-control-input" id="customCheck1">
                   <label class="custom-control-label" for="customCheck1">Lembrar senha</label>
                 </div>
-                <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Entrar</button>
+                <div>
+                <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit" @click.prevent="login()">Entrar</button>
                 <div class="text-center">
                   <a class="small" href="#">Esqueceu a senha?</a></div>
-                <div>
-                  <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Criar minha conta</button>
+                  <router-link :to="{name: 'AddUsuario'}">
+                    <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Criar minha conta</button>
+                  </router-link>
                 </div>
               </form>
             </div>
@@ -62,8 +64,8 @@ export default {
         .then(response => {
           localStorage.setItem('token', response.data.token)
           this.message = response.data.message
-        }
-        )
+          this.$router.push({name: 'Perfil'})
+        })
         .catch(e => { this.message = 'Erro' })
     }
   }

@@ -12,7 +12,9 @@
       <b-navbar-nav class="ml-auto">
         <b-navbar-brand href="#"></b-navbar-brand>
         <b-navbar-brand href="#"></b-navbar-brand>
-        <b-navbar-brand href="#">Sair</b-navbar-brand>
+        <router-link :to="{name: 'Home'}">
+          <b-navbar-brand>Sair</b-navbar-brand>
+        </router-link>
 
       </b-navbar-nav>
     </b-collapse>
