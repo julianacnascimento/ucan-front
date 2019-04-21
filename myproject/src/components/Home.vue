@@ -12,13 +12,16 @@
               <form>
                 <div class="form-label-group">
                   <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus v-model="usuario.email">
-                  <label for="inputEmail">Email </label>
+                  <label for="inputEmail" v-b-popover.hover.top="'Digite seu email'" variant="primary">Email </label>
                 </div>
 
                 <div class="form-label-group">
                   <input type="password" id="inputPassword" class="form-control" placeholder="Password" required v-model="usuario.senha">
-                  <label for="inputPassword">Senha</label>
+                  <label for="inputPassword" v-b-popover.hover.top="'Digite sua senha'" variant="primary">Senha</label>
 
+                </div>
+                <div>
+                  <b-alert show variant="danger">Usuário e/ou Senha incorretos!</b-alert>
                 </div>
 
                 <div class="custom-control custom-checkbox mb-3">
@@ -32,6 +35,8 @@
                   <router-link :to="{name: 'AddUsuario'}">
                     <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Criar minha conta</button>
                   </router-link>
+                  <div>
+                  </div>
                 </div>
               </form>
             </div>
@@ -62,9 +67,11 @@ export default {
     login: function () {
       axios.post('http://127.0.0.1:3000/auth', this.usuario)
         .then(response => {
-          localStorage.setItem('token', response.data.token)
-          this.message = response.data.message
-          this.$router.push({name: 'Perfil'})
+          if (response.data.token) {
+            localStorage.setItem('token', response.data.token)
+            this.message = response.data.message
+            this.$router.push({name: 'Perfil'})
+          }
         })
         .catch(e => { this.message = 'Erro' })
     }

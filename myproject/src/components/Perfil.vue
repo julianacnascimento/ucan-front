@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="authorized">
   <b-navbar toggleable="lg" type="dark" variant="primary">
     <b-navbar-brand href="#"></b-navbar-brand>
 
@@ -12,10 +12,7 @@
       <b-navbar-nav class="ml-auto">
         <b-navbar-brand href="#"></b-navbar-brand>
         <b-navbar-brand href="#"></b-navbar-brand>
-        <router-link :to="{name: 'Home'}">
-          <b-navbar-brand>Sair</b-navbar-brand>
-        </router-link>
-
+        <b-navbar-brand @click.prevent="logout()">Sair</b-navbar-brand>
       </b-navbar-nav>
     </b-collapse>
   </b-navbar>
@@ -32,7 +29,7 @@
     img-alt="Image"
     img-top
   >
-    <h4 slot="header">Nome</h4>
+    <h4 slot="header">{{usuario.nome}}</h4>
 
     <b-card-body>
         <!-- <b-list-group flush> -->
@@ -85,5 +82,46 @@
 </b-col>
 </b-row>
 </b-container>
-  </div>
+</div>
+<div v-else>
+  <b-modal v-model="modalShow">Você não está conectado(a)!</b-modal>
+</div>
 </template>
+<script>
+import axios from 'axios'
+export default {
+  name: 'Perfil',
+  data: function () {
+    return {
+      usuario: {
+        nome: '',
+        email: ''
+      },
+      authorized: false,
+      modalShow: true
+    }
+  },
+  created: function () {
+    const token = localStorage.getItem('token')
+
+    if (token !== null) {
+      this.authorized = true
+      axios
+        .get('http://127.0.0.1:3000/perfil', {headers: {'x-access-token': token}})
+        .then(response => {
+          this.usuario.nome = response.data.nome
+          this.usuario.email = response.data.email
+        })
+        .catch(e => {
+          console.log('erro na autorização')
+        })
+    }
+  },
+  methods: {
+    logout: function () {
+      localStorage.removeItem('token')
+      this.$router.push({name: 'Home'})
+    }
+  }
+}
+</script>

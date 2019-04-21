@@ -46,8 +46,9 @@ export default {
     return {
       msg: 'cadastrar usuário',
       usuario: {
+        nome: '',
         email: '',
-        password: ''
+        senha: ''
       },
       message: ''
     }
