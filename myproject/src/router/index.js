@@ -29,7 +29,7 @@ export default new Router({
       component: Home
     },
     {
-      path: '/usuarios/add',
+      path: '/usuario/add',
       name: 'AddUsuario',
       component: AddUsuario
     },

@@ -2,9 +2,9 @@
     <div class="wraprer">
         <form class="form-signin">
             <h2 class="form-signin-heading text-center"> ÁREA RESTRITA <p>UCAN</p> </h2>
-            <input type="text" class="form-control" name="email" placeholder="Email" required="" autofocus="">
-            <input type="password" class="form-control" name="password" placeholder="Senha" required="" autofocus="">
-            <button class="btn btn-lg btn-primary btn-block" @click.prevent="loginAdmin()">ENTRAR</button>
+            <input type="text" class="form-control" name="email" placeholder="Email" required autofocus v-model="admin.email">
+            <input type="password" class="form-control" name="password" placeholder="Senha" required autofocus v-model="admin.senha">
+            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" @click.prevent="login()">entrar</button>
         </form>
     </div>
 </template>
@@ -21,12 +21,12 @@ export default {
     }
   },
   methods: {
-    loginAdmin: function () {
+    login: function () {
       axios.post('http://127.0.0.1:3000/auth.admin', this.admin)
         .then(response => {
           console.log(response.data)
-          if (response.data.token) {
-            localStorage.setItem('token', response.data.token)
+          if (response.data.tokenAdmin) {
+            localStorage.setItem('tokenAdmin', response.data.tokenAdmin)
             this.message = response.data.message
             this.$router.push({name: 'DashAdmin'})
           }

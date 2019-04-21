@@ -23,11 +23,6 @@
                 <div>
                   <b-alert show variant="danger">Usuário e/ou Senha incorretos!</b-alert>
                 </div>
-
-                <div class="custom-control custom-checkbox mb-3">
-                  <input type="checkbox" class="custom-control-input" id="customCheck1">
-                  <label class="custom-control-label" for="customCheck1">Lembrar senha</label>
-                </div>
                 <div>
                 <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit" @click.prevent="login()">Entrar</button>
                 <div class="text-center">
