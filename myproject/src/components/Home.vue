@@ -12,15 +12,15 @@
               <form>
                 <div class="form-label-group">
                   <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus v-model="usuario.email">
-                  <label for="inputEmail" v-b-popover.hover.top="'Digite seu email'" variant="primary">Email </label>
+                  <label for="inputEmail" >Email </label>
                 </div>
 
                 <div class="form-label-group">
                   <input type="password" id="inputPassword" class="form-control" placeholder="Password" required v-model="usuario.senha">
-                  <label for="inputPassword" v-b-popover.hover.top="'Digite sua senha'" variant="primary">Senha</label>
+                  <label for="inputPassword">Senha</label>
 
                 </div>
-                <div>
+                <div v-if="loginErro">
                   <b-alert show variant="danger">Usuário e/ou Senha incorretos!</b-alert>
                 </div>
                 <div>
@@ -55,7 +55,8 @@ export default {
         email: '',
         senha: ''
       },
-      message: ''
+      message: '',
+      loginErro: false
     }
   },
   methods: {
@@ -66,6 +67,8 @@ export default {
             localStorage.setItem('token', response.data.token)
             this.message = response.data.message
             this.$router.push({name: 'Perfil'})
+          } else {
+            this.loginErro = true
           }
         })
         .catch(e => { this.message = 'Erro' })

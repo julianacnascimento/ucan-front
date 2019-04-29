@@ -12,7 +12,9 @@ import Button from 'bootstrap-vue/es/components/button'
 import axios from 'axios'
 import Layout from 'bootstrap-vue/es/components/layout'
 import Progress from 'bootstrap-vue/es/components/progress'
+import ListGroup from 'bootstrap-vue/es/components/list-group'
 
+Vue.use(ListGroup)
 Vue.use(Progress)
 Vue.use(Layout)
 

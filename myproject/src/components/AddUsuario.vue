@@ -24,6 +24,9 @@
                   <input type="password" id="inputPassword" class="form-control" placeholder="Password" required v-model="usuario.senha">
                   <label for="inputPassword">Senha</label>
                 </div>
+                <div>
+                  <b-alert show variant="primary">Usuário e/ou Senha incorretos!</b-alert>
+                </div>
                 <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit" @click.prevent="addUsuario()">Cadastrar</button>
               </form>
             </div>

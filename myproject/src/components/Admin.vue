@@ -4,6 +4,9 @@
             <h2 class="form-signin-heading text-center"> ÁREA RESTRITA <p>UCAN</p> </h2>
             <input type="text" class="form-control" name="email" placeholder="Email" required autofocus v-model="admin.email">
             <input type="password" class="form-control" name="password" placeholder="Senha" required autofocus v-model="admin.senha">
+            <div v-if="loginErro">
+              <b-alert show variant="danger">Usuário e/ou Senha incorretos!</b-alert>
+            </div>
             <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" @click.prevent="login()">entrar</button>
         </form>
     </div>
@@ -17,7 +20,8 @@ export default {
       admin: {
         email: '',
         senha: ''
-      }
+      },
+      loginErro: false
     }
   },
   methods: {
@@ -25,10 +29,12 @@ export default {
       axios.post('http://127.0.0.1:3000/auth.admin', this.admin)
         .then(response => {
           console.log(response.data)
-          if (response.data.tokenAdmin) {
-            localStorage.setItem('tokenAdmin', response.data.tokenAdmin)
+          if (response.data.token) {
+            localStorage.setItem('tokenAdmin', response.data.token)
             this.message = response.data.message
             this.$router.push({name: 'DashAdmin'})
+          } else {
+            this.loginErro = true
           }
         })
         .catch(e => { this.message = 'Erro' })
