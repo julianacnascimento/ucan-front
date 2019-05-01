@@ -91,7 +91,6 @@ export default {
   },
   created: function () {
     const token = localStorage.getItem('token')
-
     if (token !== null) {
       this.authorized = true
       axios

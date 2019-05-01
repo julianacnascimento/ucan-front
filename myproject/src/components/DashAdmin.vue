@@ -10,29 +10,75 @@
           </b-navbar-nav>
         </b-collapse>
       </b-navbar>
-      <b-container class="fluid" fluid>
-    <b-row>
-        <b-col class="col-container" cols="3">
-          <b-list-group v-b-scrollspy:listgroup-ex>
-            <b-list-group-item button>Usuários</b-list-group-item>
-            <b-list-group-item button>Profissões</b-list-group-item>
-            <b-list-group-item button>Materiais</b-list-group-item>
-          </b-list-group>
-        </b-col>
-      <b-col cols="8">
-        <div id="listgroup-ex" style="position:relative; overflow-y:auto; height:300px">
-          <b-list-group>
-            <b-list-group-item>Profissões</b-list-group-item>
-          <b-list-group-item>
-              <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2">adicionar</button>
-              <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2">remover</button>
-          </b-list-group-item>
-          </b-list-group>
-        </div>
+<div class="mt-3">
+    <b-container class="bv-example-row">
+  <b-tabs content-class="mt-3">
+    <b-tab title="Usuários" active>
+      <b-table striped hover small :items="items1" :fields="fields1"></b-table>
+      <b-pagination
+      v-model="currentPage"
+      :total-rows="rows"
+      :per-page="perPage"
+      aria-controls="my-table">
+    </b-pagination>
+    </b-tab>
+
+    <b-tab title="Profissões">
+      <!-- <div class="col-md-3"></div> -->
+      <b-table striped hover small :items="items2" :fields="fields2">
+      </b-table>
+      <div align="right"><div>
+  <b-button variant="success" v-b-modal.modal-1>Adicionar</b-button>
+    <b-pagination
+      v-model="currentPage"
+      :total-rows="rows"
+      :per-page="perPage"
+      aria-controls="my-table">
+    </b-pagination>
+  <b-modal id="modal-1" title="Adicione uma nova profissão!" ok-title="Salvar" ok-variant="primary" cancel-variant="danger" cancel-title="Cancelar" >
+    <div class="my-4">
+      <b-row class="my-1" v-for="type in types2" :key="type" >
+      <b-col sm="3" align="left">
+        <label :for="`type-${type}`">{{ type }}:</label>
+      </b-col>
+      <b-col sm="9">
+        <b-form-input :id="`type-${type}`" :type="type"></b-form-input>
       </b-col>
     </b-row>
-  </b-container>
     </div>
+  </b-modal>
+</div>
+</div>
+</b-tab>
+    <b-tab title="Materiais">
+      <b-table striped hover small :items="items3" :fields="fields3"></b-table>
+      <div align="right"><div>
+  <b-button variant="success" v-b-modal.modal-1>Adicionar</b-button>
+    <b-pagination
+      v-model="currentPage"
+      :total-rows="rows"
+      :per-page="perPage"
+      aria-controls="my-table">
+    </b-pagination>
+  <b-modal id="modal-1" title="Adicione um novo material!" ok-title="Salvar" ok-variant="primary" cancel-variant="danger" cancel-title="Cancelar" >
+    <div class="my-4">
+      <b-row class="my-1" v-for="type in types3" :key="type" >
+      <b-col sm="3" align="left">
+        <label :for="`type-${type}`">{{ type }}:</label>
+      </b-col>
+      <b-col sm="9">
+        <b-form-input :id="`type-${type}`" :type="type"></b-form-input>
+      </b-col>
+    </b-row>
+    </div>
+  </b-modal>
+</div>
+</div>
+    </b-tab>
+  </b-tabs>
+    </b-container>
+</div>
+  </div>
     <div v-else>
       <p>Você não está autorizado(a)!</p>
     </div>
@@ -47,12 +93,21 @@ export default {
       admin: {
         email: ''
       },
-      authorized: false
+      authorized: false,
+      types2: [
+        'Nome',
+        'Descrição',
+        'Competências'
+      ],
+      types3: [
+        'Título',
+        'Descrição',
+        'Link'
+      ]
     }
   },
   created: function () {
     const tokenAdmin = localStorage.getItem('tokenAdmin')
-
     if (tokenAdmin !== null) {
       this.authorized = true
       axios.get('http://127.0.0.1:3000/perfil.admin', {headers: {'x-acess-token': tokenAdmin}})

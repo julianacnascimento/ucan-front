@@ -14,11 +14,9 @@
                   <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus v-model="usuario.email">
                   <label for="inputEmail" >Email </label>
                 </div>
-
                 <div class="form-label-group">
                   <input type="password" id="inputPassword" class="form-control" placeholder="Password" required v-model="usuario.senha">
-                  <label for="inputPassword">Senha</label>
-
+                  <label for="inputPassword" v-b-popover.hover.top="'Digite sua senha'" variant="primary">Senha</label>
                 </div>
                 <div v-if="loginErro">
                   <b-alert show variant="danger">Usuário e/ou Senha incorretos!</b-alert>
