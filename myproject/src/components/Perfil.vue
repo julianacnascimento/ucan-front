@@ -71,9 +71,6 @@
 </b-row>
 </b-container>
 </div>
-  <div v-else>
-    <b-modal v-model="modalShow">Você não está conectado(a)!</b-modal>
-  </div>
 </template>
 <script>
 import axios from 'axios'
@@ -86,7 +83,7 @@ export default {
         email: ''
       },
       authorized: false,
-      modalShow: true
+      modalShow: false
     }
   },
   created: function () {
@@ -102,6 +99,8 @@ export default {
         .catch(e => {
           console.log('erro na autorização')
         })
+    } else {
+      this.$router.push({name: 'Home'})
     }
   },
   methods: {

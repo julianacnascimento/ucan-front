@@ -23,13 +23,9 @@
                 </div>
                 <div>
                 <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit" @click.prevent="login()">Entrar</button>
-                <div class="text-center">
-                  <a class="small" href="#">Esqueceu a senha?</a></div>
-                  <router-link :to="{name: 'AddUsuario'}">
-                    <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Criar minha conta</button>
-                  </router-link>
-                  <div>
-                  </div>
+                <router-link :to="{name: 'AddUsuario'}">
+                  <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Criar minha conta</button>
+                </router-link>
                 </div>
               </form>
             </div>
@@ -162,7 +158,7 @@ export default {
   color: transparent;
 }
 
-.form-label-group input:not(:placeholder-shown) {
+/* .form-label-group input:not(:placeholder-shown) {
   padding-top: calc(var(--input-padding-y) + var(--input-padding-y) * (2 / 3));
   padding-bottom: calc(var(--input-padding-y) / 3);
   font-size: 20px;
@@ -171,13 +167,13 @@ export default {
 .form-label-group input:not(:placeholder-shown)~label {
   padding-top: calc(var(--input-padding-y) / 3);
   padding-bottom: calc(var(--input-padding-y) / 3);
-  font-size: 10px;
-  /* color:transparent; */
-  color: #007bff;
+  font-size: 10px; */
+  /* color:transparent; * area comentada*/
+  /* color: #007bff;
   text-align: left;
   margin-top: 10px;
   margin-bottom: 20px;
   margin: 1px;
-}
+} */
 
 </style>

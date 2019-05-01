@@ -79,9 +79,6 @@
     </b-container>
 </div>
   </div>
-    <div v-else>
-      <p>Você não está autorizado(a)!</p>
-    </div>
 </template>
 
 <script>
@@ -117,6 +114,8 @@ export default {
         .catch(e => {
           console.log('erro na autorização')
         })
+    } else {
+      this.$router.push({name: 'Admin'})
     }
   },
   methods: {

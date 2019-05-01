@@ -5,7 +5,7 @@
             <input type="text" class="form-control" name="email" placeholder="Email" required autofocus v-model="admin.email">
             <input type="password" class="form-control" name="password" placeholder="Senha" required autofocus v-model="admin.senha">
             <div v-if="loginErro">
-              <b-alert show variant="danger">Usuário e/ou Senha incorretos!</b-alert>
+              <b-alert show variant="danger">Usuário e/ou Senha incorretos</b-alert>
             </div>
             <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" @click.prevent="login()">entrar</button>
         </form>
@@ -21,7 +21,8 @@ export default {
         email: '',
         senha: ''
       },
-      loginErro: false
+      loginErro: false,
+      loginNull: false
     }
   },
   methods: {
