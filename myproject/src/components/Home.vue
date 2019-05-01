@@ -50,7 +50,6 @@ export default {
       msg: 'Bem vindo ao Ucan!'
     }
   }
-  
 }
 </script>
 
@@ -64,7 +63,6 @@ export default {
   color: #007bff;
   font-family:Impact;
   font-size: 50px;
-  
 }
 
 .login,
@@ -75,7 +73,7 @@ export default {
 .bg-image {
   background-size: cover;
   background-position: center;
-  background-image: url('https://i.pinimg.com/736x/4e/f8/54/4ef854bc4b175486c776ca25dbb1f935.jpg'); 
+  background-image: url('https://i.pinimg.com/736x/4e/f8/54/4ef854bc4b175486c776ca25dbb1f935.jpg');
 }
 
 .login-heading {
@@ -93,7 +91,6 @@ export default {
 .form-label-group {
   position: relative;
   margin-bottom: 1.5rem;
- 
 }
 
 .form-label-group>input,
@@ -121,13 +118,10 @@ export default {
   border-radius: .25rem;
   transition: all .1s ease-in-out;
   /* border-block-end-color: #007bff; */
-  
-  
 }
 
 .form-label-group input::-webkit-input-placeholder {
   color: transparent;
-  
 }
 
 .form-label-group input:-ms-input-placeholder {
@@ -150,7 +144,6 @@ export default {
   padding-top: calc(var(--input-padding-y) + var(--input-padding-y) * (2 / 3));
   padding-bottom: calc(var(--input-padding-y) / 3);
   font-size: 20px;
-  
 }
 
 .form-label-group input:not(:placeholder-shown)~label {
@@ -164,7 +157,4 @@ export default {
   margin-bottom: 20px;
   margin: 1px;
 }
-
-
 </style>
-
