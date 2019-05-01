@@ -12,31 +12,20 @@
               <form>
                 <div class="form-label-group">
                   <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus v-model="usuario.email">
-                  <label for="inputEmail" v-b-popover.hover.top="'Digite seu email'" variant="primary">Email </label>
+                  <label for="inputEmail" >Email </label>
                 </div>
-
                 <div class="form-label-group">
                   <input type="password" id="inputPassword" class="form-control" placeholder="Password" required v-model="usuario.senha">
                   <label for="inputPassword" v-b-popover.hover.top="'Digite sua senha'" variant="primary">Senha</label>
-
                 </div>
-                <div>
+                <div v-if="loginErro">
                   <b-alert show variant="danger">Usuário e/ou Senha incorretos!</b-alert>
-                </div>
-
-                <div class="custom-control custom-checkbox mb-3">
-                  <input type="checkbox" class="custom-control-input" id="customCheck1">
-                  <label class="custom-control-label" for="customCheck1">Lembrar senha</label>
                 </div>
                 <div>
                 <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit" @click.prevent="login()">Entrar</button>
-                <div class="text-center">
-                  <a class="small" href="#">Esqueceu a senha?</a></div>
-                  <router-link :to="{name: 'AddUsuario'}">
-                    <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Criar minha conta</button>
-                  </router-link>
-                  <div>
-                  </div>
+                <router-link :to="{name: 'AddUsuario'}">
+                  <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Criar minha conta</button>
+                </router-link>
                 </div>
               </form>
             </div>
@@ -60,7 +49,8 @@ export default {
         email: '',
         senha: ''
       },
-      message: ''
+      message: '',
+      loginErro: false
     }
   },
   methods: {
@@ -71,6 +61,8 @@ export default {
             localStorage.setItem('token', response.data.token)
             this.message = response.data.message
             this.$router.push({name: 'Perfil'})
+          } else {
+            this.loginErro = true
           }
         })
         .catch(e => { this.message = 'Erro' })
@@ -166,7 +158,7 @@ export default {
   color: transparent;
 }
 
-.form-label-group input:not(:placeholder-shown) {
+/* .form-label-group input:not(:placeholder-shown) {
   padding-top: calc(var(--input-padding-y) + var(--input-padding-y) * (2 / 3));
   padding-bottom: calc(var(--input-padding-y) / 3);
   font-size: 20px;
@@ -175,13 +167,13 @@ export default {
 .form-label-group input:not(:placeholder-shown)~label {
   padding-top: calc(var(--input-padding-y) / 3);
   padding-bottom: calc(var(--input-padding-y) / 3);
-  font-size: 10px;
-  /* color:transparent; */
-  color: #007bff;
+  font-size: 10px; */
+  /* color:transparent; * area comentada*/
+  /* color: #007bff;
   text-align: left;
   margin-top: 10px;
   margin-bottom: 20px;
   margin: 1px;
-}
+} */
 
 </style>

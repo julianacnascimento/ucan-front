@@ -36,19 +36,7 @@
         <b-list-group-item>Faculdade</b-list-group-item>
         <b-list-group-item>Curso</b-list-group-item>
         <b-list-group-item>Matrícula</b-list-group-item>
-        <!-- <b-list-group-item>Vestibulum at eros</b-list-group-item> -->
-    <!-- </b-list-group> -->
-      <!-- <b-card-title>Card Title</b-card-title>
-      <b-card-sub-title class="mb-2">Card Sub Title</b-card-sub-title> -->
-      <!-- <b-card-text>
-        Some quick example text to build on the card title and make up the bulk of the card's
-        content.
-      </b-card-text> -->
     </b-card-body>
-    <!-- <b-card-body>
-      <a href="#" class="card-link">Card link</a>
-      <a href="#" class="card-link">Another link</a>
-    </b-card-body> -->
   </b-card>
 </div>
     </b-col>
@@ -74,17 +62,14 @@
   <div class="mt-3">
     <b-card-group deck>
       <b-card border-variant="primary" header="Materiais" align="center">
-         <h6>Material A</h6>
-        <div><b-progress :value="value" class="mb-3"></b-progress></div>
+          <h6>Material A</h6>
+          <div><b-progress :value="value" class="mb-3"></b-progress></div>
       </b-card>
     </b-card-group>
   </div>
 </b-col>
 </b-row>
 </b-container>
-</div>
-<div v-else>
-  <b-modal v-model="modalShow">Você não está conectado(a)!</b-modal>
 </div>
 </template>
 <script>
@@ -98,12 +83,11 @@ export default {
         email: ''
       },
       authorized: false,
-      modalShow: true
+      modalShow: false
     }
   },
   created: function () {
     const token = localStorage.getItem('token')
-
     if (token !== null) {
       this.authorized = true
       axios
@@ -115,6 +99,8 @@ export default {
         .catch(e => {
           console.log('erro na autorização')
         })
+    } else {
+      this.$router.push({name: 'Home'})
     }
   },
   methods: {

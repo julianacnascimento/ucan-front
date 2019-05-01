@@ -24,6 +24,9 @@
                   <input type="password" id="inputPassword" class="form-control" placeholder="Password" required v-model="usuario.senha">
                   <label for="inputPassword">Senha</label>
                 </div>
+                <div v-if="usuarioAdd">
+                  <b-modal v-model="modalShow">Usuário cadastrado!</b-modal>
+                </div>
                 <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit" @click.prevent="addUsuario()">Cadastrar</button>
               </form>
             </div>
@@ -50,17 +53,21 @@ export default {
         email: '',
         senha: ''
       },
-      message: ''
+      message: '',
+      usuarioAdd: false
     }
   },
   methods: {
     addUsuario: function () {
       axios.post('http://127.0.0.1:3000/usuario', this.usuario)
         .then(response => {
-          this.message = 'Usuário adicionado'
-          this.$router.push({name: 'Perfil'})
+          this.usuarioAdd = true
+          // this.$router.push({name: 'Home'})
         })
         .catch(e => { this.message = 'erro! NAUs' }) //  na adição de usuário
+    },
+    home: function (event) {
+      this.$router.push({name: 'Home'})
     }
   }
 }
