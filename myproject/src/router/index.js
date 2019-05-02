@@ -43,7 +43,7 @@ export default new Router({
       component: Perfil
     },
     {
-      path: '/perfil/editar/',
+      path: '/perfil/editar/:id',
       name: 'EditarPerfil',
       component: EditarPerfil
     },

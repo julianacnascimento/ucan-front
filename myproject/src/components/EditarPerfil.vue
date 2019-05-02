@@ -68,7 +68,7 @@
 <script>
 import axios from 'axios'
 export default {
-  name: 'AddUsuario',
+  name: 'Perfil',
   data: function () {
     return {
       usuario: {},
@@ -77,15 +77,20 @@ export default {
     }
   },
   created: function () {
-    const token = localStorage.get('token')
-    const id = this.$route.params.id
-    if (token) {
-      if (id) {
-        axios.get('http://127.0.0.1:3000/perfil/', {headers: {'x-access-token': token}})
-          .then(response => {
-            this.usuario = response.data
-          })
-      }
+    const token = localStorage.getItem('token')
+    if (token !== null) {
+      this.authorized = true
+      axios
+        .get('http://127.0.0.1:3000/perfil', {headers: {'x-access-token': token}})
+        .then(response => {
+          this.usuario.nome = response.data.nome
+          this.usuario.email = response.data.email
+        })
+        .catch(e => {
+          console.log('erro na autorização')
+        })
+    } else {
+      this.$router.push({name: 'Perfil'})
     }
   },
   methods: {
@@ -94,12 +99,12 @@ export default {
       this.$router.push({name: 'Home'})
     },
     userUpdate: function () {
-      const token = localStorage.getItem('token')
-      if (this.entity.id) {
-        axios.put('http://127.0.0.1:3000/usuario/' + this.entity.id, this.entity, {headers: {'x-access-token': token}})
-          .then(response => { this.message = 'Livro editado' })
-          .catch(e => { this.message = 'Erro' })
-      }
+      const id = this.$route.params.id
+      axios.put('http://127.0.0.1:3000/usuario' + id, {nome: this.nome, email: this.email})
+        .then(response => {
+          this.$router.push({name: 'Perfil'})
+        })
+        .catch(e => { this.message = 'erro! NAUs' }) //  na adição de usuário
     }
   }
 }
