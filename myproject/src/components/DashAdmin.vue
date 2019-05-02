@@ -28,7 +28,7 @@
       <b-table striped hover small :items="items2" :fields="fields2">
       </b-table>
       <div align="right"><div>
-  <b-button variant="success" v-b-modal.modal-1>Adicionar</b-button>
+  <b-button variant="success" v-b-modal.modal-1 href="/dashboard/profissao">Adicionar</b-button>
     <b-pagination
       v-model="currentPage"
       :total-rows="rows"
@@ -53,14 +53,14 @@
     <b-tab title="Materiais">
       <b-table striped hover small :items="items3" :fields="fields3"></b-table>
       <div align="right"><div>
-  <b-button variant="success" v-b-modal.modal-1>Adicionar</b-button>
+  <!-- <b-button variant="success" v-b-modal.modal-1>Adicionar</b-button> -->
     <b-pagination
       v-model="currentPage"
       :total-rows="rows"
       :per-page="perPage"
       aria-controls="my-table">
     </b-pagination>
-  <b-modal id="modal-1" title="Adicione um novo material!" ok-title="Salvar" ok-variant="primary" cancel-variant="danger" cancel-title="Cancelar" >
+  <!-- <b-modal id="modal-1" title="Adicione um novo material!" ok-title="Salvar" ok-variant="primary" cancel-variant="danger" cancel-title="Cancelar" >
     <div class="my-4">
       <b-row class="my-1" v-for="type in types3" :key="type" >
       <b-col sm="3" align="left">
@@ -71,7 +71,7 @@
       </b-col>
     </b-row>
     </div>
-  </b-modal>
+  </b-modal> -->
 </div>
 </div>
     </b-tab>
@@ -118,7 +118,7 @@ export default {
       this.$router.push({name: 'Admin'})
     }
   },
-  methods: {
+  methodsAdm: {
     logout: function () {
       localStorage.removeItem('tokenAdmin')
       this.$router.push({name: 'Admin'})

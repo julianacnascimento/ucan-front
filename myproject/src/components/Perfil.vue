@@ -13,16 +13,6 @@
         <b-dropdown-item @click.prevent="logout()">Sair</b-dropdown-item>
       </b-dropdown>
     </div>
-
-    <!-- <b-collapse id="nav-collapse" is-nav> -->
-
-      <!-- Right aligned nav items -->
-      <!-- <b-navbar-nav class="ml-auto">
-        <b-navbar-brand href="#"></b-navbar-brand>
-        <b-navbar-brand href="#"></b-navbar-brand>
-        <b-navbar-brand @click.prevent="logout()">Sair</b-navbar-brand>
-      </b-navbar-nav>
-    </b-collapse> -->
   </b-navbar>
 <b-container class="bv-example-row">
   <!-- Stack the columns on mobile by making one full-width and the other half-width -->

@@ -6,6 +6,7 @@ import AddUsuario from '@/components/AddUsuario'
 import Admin from '@/components/Admin'
 import EditarPerfil from '@/components/EditarPerfil'
 import DashAdmin from '@/components/DashAdmin'
+import Profissao from '@/components/Profissao'
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -56,6 +57,11 @@ export default new Router({
       path: '/dashboard',
       name: 'DashAdmin',
       component: DashAdmin
+    },
+    {
+      path: '/dashboard/profissao',
+      name: 'Profissao',
+      component: Profissao
     }
   ]
 })
