@@ -4,6 +4,7 @@ import Home from '@/components/Home'
 import Perfil from '@/components/Perfil'
 import AddUsuario from '@/components/AddUsuario'
 import Admin from '@/components/Admin'
+import EditarPerfil from '@/components/EditarPerfil'
 import DashAdmin from '@/components/DashAdmin'
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
@@ -24,6 +25,7 @@ Vue.use(BootstrapVue)
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -36,9 +38,14 @@ export default new Router({
       component: AddUsuario
     },
     {
-      path: '/perfil',
+      path: '/perfil/',
       name: 'Perfil',
       component: Perfil
+    },
+    {
+      path: '/perfil/editar/:id',
+      name: 'EditarPerfil',
+      component: EditarPerfil
     },
     {
       path: '/admin',

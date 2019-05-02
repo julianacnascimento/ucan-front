@@ -3,18 +3,26 @@
   <b-navbar toggleable="lg" type="dark" variant="primary">
     <b-navbar-brand href="#"></b-navbar-brand>
 
-    <b-navbar-brand href="#"><b>UCAN</b></b-navbar-brand>
+    <b-navbar-brand href="/perfil"><b>UCAN</b></b-navbar-brand>
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+    <div class="ml-auto">
+      <b-dropdown
+        split split-href="" text="Opções" class="m-2"
+      >
+        <b-dropdown-item href="/perfil/editar/">Editar Perfil</b-dropdown-item>
+        <b-dropdown-item @click.prevent="logout()">Sair</b-dropdown-item>
+      </b-dropdown>
+    </div>
 
-    <b-collapse id="nav-collapse" is-nav>
+    <!-- <b-collapse id="nav-collapse" is-nav> -->
 
       <!-- Right aligned nav items -->
-      <b-navbar-nav class="ml-auto">
+      <!-- <b-navbar-nav class="ml-auto">
         <b-navbar-brand href="#"></b-navbar-brand>
         <b-navbar-brand href="#"></b-navbar-brand>
         <b-navbar-brand @click.prevent="logout()">Sair</b-navbar-brand>
       </b-navbar-nav>
-    </b-collapse>
+    </b-collapse> -->
   </b-navbar>
 <b-container class="bv-example-row">
   <!-- Stack the columns on mobile by making one full-width and the other half-width -->
@@ -33,9 +41,9 @@
 
     <b-card-body>
         <!-- <b-list-group flush> -->
-        <b-list-group-item>Faculdade</b-list-group-item>
-        <b-list-group-item>Curso</b-list-group-item>
-        <b-list-group-item>Matrícula</b-list-group-item>
+        <b-list-group-item>Faculdade: Universidade Federal da Paraíba</b-list-group-item>
+        <b-list-group-item>Curso: Sistemas de Informação</b-list-group-item>
+        <b-list-group-item>Matrícula: 123456</b-list-group-item>
     </b-card-body>
   </b-card>
 </div>
@@ -82,8 +90,7 @@ export default {
         nome: '',
         email: ''
       },
-      authorized: false,
-      modalShow: false
+      authorized: false
     }
   },
   created: function () {
