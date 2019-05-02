@@ -11,22 +11,23 @@
               <h3 class="login-heading mb-4">{{msg}}</h3>
               <form>
                 <div class="form-label-group">
-                  <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus v-model="usuario.email">
-                  <label for="inputEmail" >Email </label>
+                  <input type="text" id="inputNome" class="form-control" placeholder="Name" required autofocus v-model="usuario.nome">
+                  <label for="inputNome">Nome Completo </label>
                 </div>
+
+                <div class="form-label-group">
+                  <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus v-model="usuario.email">
+                  <label for="inputEmail">Email </label>
+                </div>
+
                 <div class="form-label-group">
                   <input type="password" id="inputPassword" class="form-control" placeholder="Password" required v-model="usuario.senha">
-                  <label for="inputPassword" v-b-popover.hover.top="'Digite sua senha'" variant="primary">Senha</label>
+                  <label for="inputPassword">Senha</label>
                 </div>
-                <div v-if="loginErro">
-                  <b-alert show variant="danger">Usuário e/ou Senha incorretos!</b-alert>
+                <div v-if="usuarioAdd">
+                  <b-modal v-model="modalShow">Usuário cadastrado!</b-modal>
                 </div>
-                <div>
-                <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit" @click.prevent="login()">Entrar</button>
-                <router-link :to="{name: 'AddUsuario'}">
-                  <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Criar minha conta</button>
-                </router-link>
-                </div>
+                <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit" @click.prevent="addUsuario()">Cadastrar</button>
               </form>
             </div>
           </div>
@@ -38,34 +39,35 @@
 
 </template>
 
+<!-- JavaScript -->
+
 <script>
 import axios from 'axios'
 export default {
-  name: 'Home',
+  name: 'AddUsuario',
   data: function () {
     return {
-      msg: 'ucan',
+      msg: 'cadastrar usuário',
       usuario: {
+        nome: '',
         email: '',
         senha: ''
       },
       message: '',
-      loginErro: false
+      usuarioAdd: false
     }
   },
   methods: {
-    login: function () {
-      axios.post('http://127.0.0.1:3000/auth', this.usuario)
+    addUsuario: function () {
+      axios.post('http://127.0.0.1:3000/usuario', this.usuario)
         .then(response => {
-          if (response.data.token) {
-            localStorage.setItem('token', response.data.token)
-            this.message = response.data.message
-            this.$router.push({name: 'Perfil'})
-          } else {
-            this.loginErro = true
-          }
+          this.usuarioAdd = true
+          // this.$router.push({name: 'Home'})
         })
-        .catch(e => { this.message = 'Erro' })
+        .catch(e => { this.message = 'erro! NAUs' }) //  na adição de usuário
+    },
+    home: function (event) {
+      this.$router.push({name: 'Home'})
     }
   }
 }
@@ -80,7 +82,7 @@ export default {
 .login-heading{
   color: #007bff;
   font-family:Impact;
-  font-size: 50px;
+  font-size: 45px;
 }
 
 .login,
@@ -158,7 +160,7 @@ export default {
   color: transparent;
 }
 
-/* .form-label-group input:not(:placeholder-shown) {
+.form-label-group input:not(:placeholder-shown) {
   padding-top: calc(var(--input-padding-y) + var(--input-padding-y) * (2 / 3));
   padding-bottom: calc(var(--input-padding-y) / 3);
   font-size: 20px;
@@ -167,13 +169,13 @@ export default {
 .form-label-group input:not(:placeholder-shown)~label {
   padding-top: calc(var(--input-padding-y) / 3);
   padding-bottom: calc(var(--input-padding-y) / 3);
-  font-size: 10px; */
-  /* color:transparent; * area comentada*/
-  /* color: #007bff;
+  font-size: 10px;
+  /* color:transparent; */
+  color: #007bff;
   text-align: left;
   margin-top: 10px;
   margin-bottom: 20px;
   margin: 1px;
-} */
+}
 
 </style>

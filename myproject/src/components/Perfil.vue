@@ -1,21 +1,28 @@
 <template>
-  <div>
+  <div v-if="authorized">
   <b-navbar toggleable="lg" type="dark" variant="primary">
     <b-navbar-brand href="#"></b-navbar-brand>
 
-    <b-navbar-brand href="#"><b>UCAN</b></b-navbar-brand>
+    <b-navbar-brand href="/perfil"><b>UCAN</b></b-navbar-brand>
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+    <div class="ml-auto">
+      <b-dropdown
+        split split-href="" text="Opções" class="m-2"
+      >
+        <b-dropdown-item href="/perfil/editar/">Editar Perfil</b-dropdown-item>
+        <b-dropdown-item @click.prevent="logout()">Sair</b-dropdown-item>
+      </b-dropdown>
+    </div>
 
-    <b-collapse id="nav-collapse" is-nav>
+    <!-- <b-collapse id="nav-collapse" is-nav> -->
 
       <!-- Right aligned nav items -->
-      <b-navbar-nav class="ml-auto">
+      <!-- <b-navbar-nav class="ml-auto">
         <b-navbar-brand href="#"></b-navbar-brand>
         <b-navbar-brand href="#"></b-navbar-brand>
-        <b-navbar-brand href="#">Sair</b-navbar-brand>
-
+        <b-navbar-brand @click.prevent="logout()">Sair</b-navbar-brand>
       </b-navbar-nav>
-    </b-collapse>
+    </b-collapse> -->
   </b-navbar>
 <b-container class="bv-example-row">
   <!-- Stack the columns on mobile by making one full-width and the other half-width -->
@@ -30,26 +37,14 @@
     img-alt="Image"
     img-top
   >
-    <h4 slot="header">Nome</h4>
+    <h4 slot="header">{{usuario.nome}}</h4>
 
     <b-card-body>
         <!-- <b-list-group flush> -->
-        <b-list-group-item>Faculdade</b-list-group-item>
-        <b-list-group-item>Curso</b-list-group-item>
-        <b-list-group-item>Matrícula</b-list-group-item>
-        <!-- <b-list-group-item>Vestibulum at eros</b-list-group-item> -->
-    <!-- </b-list-group> -->
-      <!-- <b-card-title>Card Title</b-card-title>
-      <b-card-sub-title class="mb-2">Card Sub Title</b-card-sub-title> -->
-      <!-- <b-card-text>
-        Some quick example text to build on the card title and make up the bulk of the card's
-        content.
-      </b-card-text> -->
+        <b-list-group-item>Faculdade: Universidade Federal da Paraíba</b-list-group-item>
+        <b-list-group-item>Curso: Sistemas de Informação</b-list-group-item>
+        <b-list-group-item>Matrícula: 123456</b-list-group-item>
     </b-card-body>
-    <!-- <b-card-body>
-      <a href="#" class="card-link">Card link</a>
-      <a href="#" class="card-link">Another link</a>
-    </b-card-body> -->
   </b-card>
 </div>
     </b-col>
@@ -75,13 +70,51 @@
   <div class="mt-3">
     <b-card-group deck>
       <b-card border-variant="primary" header="Materiais" align="center">
-         <h6>Material A</h6>
-        <div><b-progress :value="value" class="mb-3"></b-progress></div>
+          <h6>Material A</h6>
+          <div><b-progress :value="value" class="mb-3"></b-progress></div>
       </b-card>
     </b-card-group>
   </div>
 </b-col>
 </b-row>
 </b-container>
-  </div>
+</div>
 </template>
+<script>
+import axios from 'axios'
+export default {
+  name: 'Perfil',
+  data: function () {
+    return {
+      usuario: {
+        nome: '',
+        email: ''
+      },
+      authorized: false
+    }
+  },
+  created: function () {
+    const token = localStorage.getItem('token')
+    if (token !== null) {
+      this.authorized = true
+      axios
+        .get('http://127.0.0.1:3000/perfil', {headers: {'x-access-token': token}})
+        .then(response => {
+          this.usuario.nome = response.data.nome
+          this.usuario.email = response.data.email
+        })
+        .catch(e => {
+          console.log('erro na autorização')
+        })
+    } else {
+      this.$router.push({name: 'Home'})
+    }
+  },
+  methods: {
+    logout: function () {
+      localStorage.removeItem('token')
+      this.$router.push({name: 'Home'})
+    }
+  }
+}
+</script>
