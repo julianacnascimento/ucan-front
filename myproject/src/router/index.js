@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from '@/components/Home'
 import Perfil from '@/components/Perfil'
 import AddUsuario from '@/components/AddUsuario'
+import ProfissaoAdd from '@/components/ProfissaoAdd'
 import Admin from '@/components/Admin'
 import DashAdmin from '@/components/DashAdmin'
 import BootstrapVue from 'bootstrap-vue'
@@ -12,7 +13,9 @@ import Button from 'bootstrap-vue/es/components/button'
 import axios from 'axios'
 import Layout from 'bootstrap-vue/es/components/layout'
 import Progress from 'bootstrap-vue/es/components/progress'
+import FormInput from 'bootstrap-vue/es/components/form-input'
 
+Vue.use(FormInput)
 Vue.use(Progress)
 Vue.use(Layout)
 
@@ -22,6 +25,7 @@ Vue.use(BootstrapVue)
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -47,6 +51,11 @@ export default new Router({
       path: '/dashboard',
       name: 'DashAdmin',
       component: DashAdmin
+    },
+    {
+      path: '/dashboard/profissoes/add',
+      name: 'ProfissaoAdd',
+      component: ProfissaoAdd
     }
   ]
 })

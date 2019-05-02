@@ -31,42 +31,43 @@
 
     <b-tab title="Profissões">
       <!-- <div class="col-md-3"></div> -->
-      <b-table striped hover small :items="items2" :fields="fields2">
-      </b-table>
+      <b-table striped hover small :items="items2" :fields="fields2"></b-table>
       <div align="right"><div>
-  <b-button variant="success" v-b-modal.modal-1>Adicionar</b-button>
-    <b-pagination
-      v-model="currentPage"
-      :total-rows="rows"
-      :per-page="perPage"
-      aria-controls="my-table">
-    </b-pagination>
-  <b-modal id="modal-1" title="Adicione uma nova profissão!" ok-title="Salvar" ok-variant="primary" cancel-variant="danger" cancel-title="Cancelar" >
-    <div class="my-4">
-      <b-row class="my-1" v-for="type in types1" :key="type" >
-      <b-col sm="3" align="left">
-        <label :for="`type-${type}`">{{ type }}:</label>
-      </b-col>
-      <b-col sm="9">
-        <b-form-input :id="`type-${type}`" :type="type"></b-form-input>
-      </b-col>
-    </b-row>
-    </div>
-  </b-modal>
+      <!-- <div> -->
+      <!-- <b-button variant="success" v-b-modal.modal-1>Adicionar</b-button> -->
+        <b-pagination
+          v-model="currentPage"
+          :total-rows="rows"
+          :per-page="perPage"
+          aria-controls="my-table">
+          </b-pagination>
+        <!-- <b-modal id="modal-1" size="xl" title="Adicione uma nova profissão!" ok-title="Salvar" ok-variant="primary" cancel-variant="danger" cancel-title="Cancelar" >
+        <div class="my-4">
+          <b-row class="my-1" v-for="type in types1" :key="type" >
+            <b-col sm="3" align="left">
+              <label :for="`type-${type}`">{{ type }}:</label>
+            </b-col>
+            <b-col sm="9">
+              <b-form-input :id="`type-${type}`" :type="type"></b-form-input>
+            </b-col>
+          </b-row>
+          </div>
+          </b-modal>
+      </div> -->
 </div>
 </div>
 </b-tab>
     <b-tab title="Materiais">
       <b-table striped hover small :items="items3" :fields="fields3"></b-table>
       <div align="right"><div>
-  <b-button variant="success" v-b-modal.modal-1>Adicionar</b-button>
+  <b-button variant="success" v-b-modal.modal-2>Adicionar</b-button>
     <b-pagination
       v-model="currentPage"
       :total-rows="rows"
       :per-page="perPage"
       aria-controls="my-table">
     </b-pagination>
-  <b-modal id="modal-1" title="Adicione um novo material!" ok-title="Salvar" ok-variant="primary" cancel-variant="danger" cancel-title="Cancelar" >
+  <!-- <b-modal id="modal-1" title="Adicione um novo material!" ok-title="Salvar" ok-variant="primary" cancel-variant="danger" cancel-title="Cancelar" >
     <div class="my-4">
       <b-row class="my-1" v-for="type in types2" :key="type" >
       <b-col sm="3" align="left">
@@ -77,10 +78,18 @@
       </b-col>
     </b-row>
     </div>
-  </b-modal>
+  </b-modal> -->
 </div>
 </div>
     </b-tab>
+    <template slot="actions" slot-scope="row">
+        <b-button size="sm" @click="info(row.item, row.index, $event.target)" class="mr-1">
+          Info modal
+        </b-button>
+        <b-button size="sm" @click="row.toggleDetails">
+          {{ row.detailsShowing ? 'Hide' : 'Show' }} Details
+        </b-button>
+      </template>
   </b-tabs>
     </b-container>
 </div>
@@ -88,6 +97,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   data () {
     return {
@@ -103,27 +113,11 @@ export default {
       ],
       // Note 'isActive' is left out and will not appear in the rendered table
       fields1: [
-        {
-          key: 'Nome',
-          sortable: true
-        },
-        {
-          key: 'Faculdade',
-          sortable: true
-        },
-        {
-          key: 'Matrícula',
-          sortable: true
-        },
-        {
-          key: 'Curso',
-          sortable: true
-          // Variant applies to the whole column, including the header and footer
-        },
-        {
-          key: 'Ações',
-          sortable: false
-        }
+        {key: 'Nome', sortable: true},
+        {key: 'Faculdade', sortable: true},
+        {key: 'Matrícula', sortable: true},
+        {key: 'Curso', sortable: true},
+        {key: 'Ações', sortable: false}
       ],
       items1: [
         {isActive: true, Matrícula: 40097408, Nome: 'Maria', Faculdade: 'UFPE', Curso: 'SI'},
@@ -132,22 +126,10 @@ export default {
         { isActive: true, Matrícula: 38674367, Nome: 'Luiza', Faculdade: 'UFCG', Curso: 'LCC' }
       ],
       fields2: [
-        {
-          key: 'Nome',
-          sortable: true
-        },
-        {
-          key: 'Descrição',
-          sortable: true
-        },
-        {
-          key: 'Competências',
-          sortable: true
-        },
-        {
-          key: 'Ações',
-          sortable: false
-        }
+        {key: 'Nome', sortable: true},
+        {key: 'Descrição', sortable: true},
+        {key: 'Competências', sortable: true},
+        {key: 'Ações', sortable: false}
       ],
       items2: [
         {isActive: true, Nome: 'Engenheiro de software', Descrição: 'É só isso não tem mais jeito acabou, boa sorte...', Competências: '...Não tenho o que dizer e o que sinto não mudará!'},
@@ -156,22 +138,10 @@ export default {
         {isActive: true, Nome: 'Desenvolvedor', Descrição: 'É só isso não tem mais jeito acabou, boa sorte...', Competências: '...Não tenho o que dizer e o que sinto não mudará!'}
       ],
       fields3: [
-        {
-          key: 'Título',
-          sortable: true
-        },
-        {
-          key: 'Descrição',
-          sortable: true
-        },
-        {
-          key: 'Link',
-          sortable: true
-        },
-        {
-          key: 'Ações',
-          sortable: false
-        }
+        {key: 'Título', sortable: true},
+        {key: 'Descrição', sortable: true},
+        {key: 'Link', sortable: true},
+        {key: 'Ações', sortable: false}
       ],
       items3: [
         {isActive: true, Título: 'Título', Descrição: 'Descrição', Link: 'Link'},
@@ -179,6 +149,14 @@ export default {
         {isActive: false, Título: 'Título', Descrição: 'Descrição', Link: 'Link'},
         {isActive: true, Título: 'Título', Descrição: 'Descrição', Link: 'Link'}
       ]
+    }
+  },
+  methods: {
+    addProfissao: function () {
+      axios.post('http://127.0.0.1:3000/profissao', {
+        nome: this.nome, descrição: this.descrição, competencias: this.competencias})
+        .then(Response => { this.message = 'foi porra!' })
+        .catch(e => { this.message = 'deu merda' })
     }
   }
 }
