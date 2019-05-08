@@ -4,8 +4,12 @@ import Home from '@/components/Home'
 import Perfil from '@/components/Perfil'
 import AddUsuario from '@/components/AddUsuario'
 import Admin from '@/components/Admin'
+import Teste from '@/components/Teste'
 import EditarPerfil from '@/components/EditarPerfil'
 import DashAdmin from '@/components/DashAdmin'
+// import Profissao from '@/components/Profissao'
+import ListProfissoes from '@/components/ListProfissoes'
+import AddProfissoes from '@/components/AddProfissoes'
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -33,6 +37,11 @@ export default new Router({
       component: Home
     },
     {
+      path: '/teste',
+      name: 'Teste',
+      component: Teste
+    },
+    {
       path: '/usuario/add',
       name: 'AddUsuario',
       component: AddUsuario
@@ -56,6 +65,17 @@ export default new Router({
       path: '/dashboard',
       name: 'DashAdmin',
       component: DashAdmin
+    },
+    {
+      // path: 'dashboard/add/profissoes',
+      path: '/add/profissoes',
+      name: 'AddProfissoes',
+      component: AddProfissoes
+    },
+    {
+      path: '/list/profissoes',
+      name: 'ListProfissoes',
+      component: ListProfissoes
     }
   ]
 })
