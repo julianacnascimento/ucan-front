@@ -16,16 +16,53 @@
           <b-col sm="auto"> -->
             <div align="center" class="mt-3">
               <b-tabs content-class="mt-3" align="center">
-                <b-tab title="Usuários" active><p></p></b-tab>
+                <b-tab title="Usuários" active><p>Usuários</p>
+                <b-container align="center">
+                  <div>
+                    <template>
+                      <div>
+                        <table border="1">
+                          <tr>
+                              <th>  ID  </th>
+                              <th>  Nome  </th>
+                              <th>  Email  </th>
+                              <th>  Senha  </th>
+                            </tr>
+                            <tr block v-for="(usuario) in usuario" :key="usuario.id">
+                              <td>  {{usuario.id}}  </td>
+                              <td>  {{usuario.nome}}  </td>
+                              <td>  {{usuario.email}}  </td>
+                              <td>  {{usuario.senha}}  </td>
+                              <b-button variant="danger" size="sm">deletar</b-button>
+                            </tr>
+                        </table>
+                      </div>
+                    </template>
+                  </div>
+                </b-container>
+                </b-tab>
                 <b-tab title="Profissões">
                   <b-container align="center">
                     <div>
-                      <b-button block v-b-modal.modal-lg variant="outline-primary">
-                        Adicione uma nova profissão</b-button>
                       <template>
-                        <div class="my-4">
-                          <b-table striped hover :items="items" :fields="fields"></b-table>
-                        </div>
+                        <div>
+                        <table border="1">
+                          <tr>
+                              <th>  ID  </th>
+                              <th>  Nome  </th>
+                              <th>  Descrição  </th>
+                              <th>  Competências  </th>
+                            </tr>
+                            <tr block v-for="(profissao) in profissao" :key="profissao.id">
+                              <td>  {{profissao.id}}  </td>
+                              <td>  {{profissao.nome}}  </td>
+                              <td>  {{profissao.descricao}}  </td>
+                              <td>  {{profissao.competencias}}  </td>
+                              <td><b-button variant="danger" size="sm" @click.prevent="deletar(usuario.id, index)">deletar</b-button></td>
+                              <td><b-button variant="primary" size="sm" @click.prevent="editarProfissao()">editar</b-button></td>
+                            </tr>
+                        </table>
+                      </div>
                       </template>
                       <b-modal id="modal-lg" size="xl" slot="" title="Adicione uma nova profissão!" hide-footer>
                       <b-row class="my-3" >
@@ -33,7 +70,7 @@
                           <label for="input-default">Nome:</label>
                         </b-col>
                         <b-col sm="8">
-                          <b-form-input id="input-default" v-model="nome" placeholder="Nome da profissão"></b-form-input>
+                          <b-form-input id="input-default" placeholder="Nome da profissão" v-model="profissao.nome"></b-form-input>
                         </b-col>
                       </b-row>
                       <b-row class="my-3">
@@ -41,7 +78,7 @@
                           <label for="textearea-default">Descrição:</label>
                         </b-col>
                         <b-col sm="8">
-                          <b-form-textarea id="textearea-default" v-model="descricao" placeholder="Descrição da profissão"></b-form-textarea>
+                          <b-form-textarea id="textearea-default" placeholder="Descrição da profissão" v-model="profissao.descricao"></b-form-textarea>
                         </b-col>
                       </b-row>
                       <b-row class="my-2">
@@ -49,15 +86,15 @@
                           <label for="textearea-default">Competências:</label>
                         </b-col>
                         <b-col sm="8">
-                          <b-form-textarea id="textearea-default" v-model="competencias" placeholder="Competências necessárias"></b-form-textarea>
+                          <b-form-textarea id="textearea-default" placeholder="Competências necessárias" v-model="profissao.competencias"></b-form-textarea>
                         </b-col>
                       </b-row>
-                      <b-button class="mt-3" variant="success" type="submit" @click.prevent="addProfissao()">Adicionar Profissão</b-button>
+                      <b-button class="mt-3" variant="primary" type="submit" @click.prevent="addProfissao()">Salvar</b-button>
                       </b-modal>
+                      <p><b-button v-b-modal.modal-lg variant="success">Adicionar</b-button></p>
                     </div>
                   </b-container>
                 </b-tab>
-                <b-tab title="Materiais"><p></p></b-tab>
               </b-tabs>
             </div>
       </b-container>
@@ -69,9 +106,11 @@ export default {
   nome: 'AddProfissoes',
   data: function () {
     return {
-      nome: '',
-      descricao: '',
-      competencias: '',
+      profissao: {
+        nome: '',
+        descricao: '',
+        competencias: ''
+      },
       fields: ['ID', 'Nome', 'Descrição', 'Competências', 'Ações'],
       items: [
         { isActive: true, age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
@@ -81,11 +120,46 @@ export default {
       ]
     }
   },
+  created: function () {
+    axios.get('http://127.0.0.1:3000/usuario')
+      .then(response => {
+        this.usuario = response.data
+      })
+      .catch(e => {
+        console.log('erro')
+      })
+    axios.get('http://127.0.0.1:3000/profissao')
+      .then(response => {
+        this.profissao = response.data
+      })
+      .catch(e => {
+        console.log('erro!')
+      })
+  },
   methods: {
     addProfissao: function () {
-      axios.post('http://127.0.0.1:3000/profissao/', { nome: this.nome, descricao: this.descricao, competencias: this.competencias })
+      axios.post('http://127.0.0.1:3000/profissao/', this.profissao)
         .then(response => { console.log('foi porra!') })
         .catch(e => { console.log('deu merda') })
+    },
+    deletar: function (id, index) {
+      axios.delete('http://127.0.0.1:3000/usuario/' + id)
+        .then(response => {
+          this.usuario.splice(index, 1)
+          alert('Usuário deletado!')
+        })
+        .catch(e => { console.log('erro na exclusão') })
+    },
+    editarProfissao: function () {
+      const profID = this.$route.params.id
+      axios
+        .put('127.0.0.1:3000/profissao/' + profID, {nome: this.profissao.nome, descricao: this.profissao.descricao, competencias: this.profissao.competencias})
+        .then(response => {
+          alert('Profissão editada!')
+        })
+        .catch(e => {
+          alert('erro')
+        })
     }
   }
 }

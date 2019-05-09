@@ -9,20 +9,10 @@
       <b-dropdown
         split split-href="" text="Opções" class="m-2"
       >
-        <b-dropdown-item href="/perfil/editar/">Editar Perfil</b-dropdown-item>
+        <b-dropdown-item href="/perfil/editar/:id">Perfil</b-dropdown-item>
         <b-dropdown-item @click.prevent="logout()">Sair</b-dropdown-item>
       </b-dropdown>
     </div>
-
-    <!-- <b-collapse id="nav-collapse" is-nav> -->
-
-      <!-- Right aligned nav items -->
-      <!-- <b-navbar-nav class="ml-auto">
-        <b-navbar-brand href="#"></b-navbar-brand>
-        <b-navbar-brand href="#"></b-navbar-brand>
-        <b-navbar-brand @click.prevent="logout()">Sair</b-navbar-brand>
-      </b-navbar-nav>
-    </b-collapse> -->
   </b-navbar>
 <b-container class="bv-example-row">
   <!-- Stack the columns on mobile by making one full-width and the other half-width -->
@@ -37,7 +27,7 @@
     img-alt="Image"
     img-top
   >
-    <h4 slot="header">{{usuario.nome}}</h4>
+    <h4 slot="header">Bem vindo(a), {{this.usuario.nome}}!</h4>
 
     <b-card-body>
         <!-- <b-list-group flush> -->
@@ -49,16 +39,6 @@
 </div>
     </b-col>
     <b-col cols="12" md="8">
-        <div class="mt-3">
-    <b-card-group deck>
-        <b-card border-variant="primary" header="Personalidade" align="center">
-        <!-- <b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text> -->
-      </b-card>
-      <b-card border-variant="primary" header="Conquistas" align="center">
-        <!-- <b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text> -->
-      </b-card>
-    </b-card-group>
-  </div>
   <div class="mt-3">
     <b-card-group deck>
       <b-card border-variant="primary" header="Profissões" align="center">
@@ -102,6 +82,7 @@ export default {
         .then(response => {
           this.usuario.nome = response.data.nome
           this.usuario.email = response.data.email
+          alert(response.data.id)
         })
         .catch(e => {
           console.log('erro na autorização')
@@ -114,6 +95,12 @@ export default {
     logout: function () {
       localStorage.removeItem('token')
       this.$router.push({name: 'Home'})
+    },
+    botaoEditar: function () {
+      axios
+        .get('http://127.0.0.1/usuario/' + this.$route.params.id).then(response => {
+          this.usuario = response.data
+        })
     }
   }
 }
