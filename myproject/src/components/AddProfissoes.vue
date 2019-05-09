@@ -33,7 +33,7 @@
                           <label for="input-default">Nome:</label>
                         </b-col>
                         <b-col sm="8">
-                          <b-form-input id="input-default" placeholder="Nome da profissão"></b-form-input>
+                          <b-form-input id="input-default" v-model="nome" placeholder="Nome da profissão"></b-form-input>
                         </b-col>
                       </b-row>
                       <b-row class="my-3">
@@ -41,7 +41,7 @@
                           <label for="textearea-default">Descrição:</label>
                         </b-col>
                         <b-col sm="8">
-                          <b-form-textarea id="textearea-default" placeholder="Descrição da profissão"></b-form-textarea>
+                          <b-form-textarea id="textearea-default" v-model="descricao" placeholder="Descrição da profissão"></b-form-textarea>
                         </b-col>
                       </b-row>
                       <b-row class="my-2">
@@ -49,7 +49,7 @@
                           <label for="textearea-default">Competências:</label>
                         </b-col>
                         <b-col sm="8">
-                          <b-form-textarea id="textearea-default" placeholder="Competências necessárias"></b-form-textarea>
+                          <b-form-textarea id="textearea-default" v-model="competencias" placeholder="Competências necessárias"></b-form-textarea>
                         </b-col>
                       </b-row>
                       <b-button class="mt-3" variant="success" type="submit" @click.prevent="addProfissao()">Adicionar Profissão</b-button>
@@ -69,9 +69,9 @@ export default {
   nome: 'AddProfissoes',
   data: function () {
     return {
-      Nome: '',
-      Descrição: '',
-      Competências: '',
+      nome: '',
+      descricao: '',
+      competencias: '',
       fields: ['ID', 'Nome', 'Descrição', 'Competências', 'Ações'],
       items: [
         { isActive: true, age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
@@ -83,8 +83,8 @@ export default {
   },
   methods: {
     addProfissao: function () {
-      axios.post('http://127.0.0.1:3000/profissao/', { nome: this.Nome, descricao: this.Descrição, competencias: this.Competências })
-        .then(Response => { console.log('foi porra!') })
+      axios.post('http://127.0.0.1:3000/profissao/', { nome: this.nome, descricao: this.descricao, competencias: this.competencias })
+        .then(response => { console.log('foi porra!') })
         .catch(e => { console.log('deu merda') })
     }
   }
