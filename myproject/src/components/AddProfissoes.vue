@@ -16,26 +16,16 @@
           <b-col sm="auto"> -->
             <div align="center" class="mt-3">
               <b-tabs content-class="mt-3" align="center">
-                <b-tab title="Usuários" active>
+                <b-tab title="Usuários" active><p>Usuários</p>
                 <b-container align="center">
                   <div>
                     <template>
                       <div>
-                        <table border="1">
-                          <tr>
-                              <th>  ID  </th>
-                              <th>  Nome  </th>
-                              <th>  Email  </th>
-                              <th>  Senha  </th>
-                            </tr>
-                            <tr v-for="(usuario) in usuario" :key="usuario.id">
-                              <td>  {{usuario.id}}  </td>
-                              <td>  {{usuario.nome}}  </td>
-                              <td>  {{usuario.email}}  </td>
-                              <td>  {{usuario.senha}}  </td>
-                              <b-button v-b-modal.modal-lg variant="danger" size="sm" @click.prevent="deletar(usuario.id, index)"> del </b-button>
-                            </tr>
-                        </table>
+                          <ul>
+                            <li v-for="(usuario) in usuario" :key="usuario.id">
+                              Nome: {{usuario.nome}} / Email: {{usuario.email}} <b-button v-b-modal.modal-lg variant="danger" size="sm" @click.prevent="deletar(usuario.id, index)"> del </b-button>
+                            </li>
+                          </ul>
                       </div>
                     </template>
                   </div>
@@ -45,23 +35,9 @@
                   <b-container align="center">
                     <div>
                       <template>
-                        <div>
-                        <table border="1">
-                          <tr>
-                              <th>  ID  </th>
-                              <th>  Nome  </th>
-                              <th>  Descricao  </th>
-                              <th>  Competências  </th>
-                            </tr>
-                            <tr v-for="(profissao) in profissao" :key="profissao.id">
-                              <td>  {{profissao.id}}  </td>
-                              <td>  {{profissao.nome}}  </td>
-                              <td>  {{profissao.descricao}}  </td>
-                              <td>  {{profissao.competencia}}  </td>
-                              <b-button v-b-modal.modal-lg variant="danger" size="sm" @click.prevent="deletarProfissao(profissao.id, index)"> deletar </b-button>
-                            </tr>
-                        </table>
-                      </div>
+                        <div class="my-4">
+                          <b-table striped hover :items="items" :fields="fields"></b-table>
+                        </div>
                       </template>
                       <b-modal id="modal-lg" size="xl" slot="" title="Adicione uma nova profissão!" hide-footer>
                       <b-row class="my-3" >
@@ -129,13 +105,6 @@ export default {
       .catch(e => {
         console.log('erro')
       })
-    axios.get('http://127.0.0.1:3000/profissao/')
-      .then(response => {
-        this.profissao = response.data
-      })
-      .catch(e => {
-        console.log('erro!')
-      })
   },
   methods: {
     addProfissao: function () {
@@ -149,21 +118,7 @@ export default {
           this.usuario.splice(index, 1)
           alert('Usuário deletado!')
         })
-        .catch(e => {
-          console.log('erro na exclusão')
-        })
-    },
-    deletarProfissao: function (id, index) {
-      axios.delete('http://127.0.0.1:3000/profissao/' + id)
-        .then(response => {
-          this.profissao.splice(index, 1)
-          alert('Profissão deletada!')
-        })
         .catch(e => { console.log('erro na exclusão') })
-    },
-    logout: function () {
-      localStorage.removeItem('token')
-      this.$router.push({name: 'Admin'})
     }
   }
 }
