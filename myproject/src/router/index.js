@@ -5,6 +5,7 @@ import Perfil from '@/components/Perfil'
 import AddUsuario from '@/components/AddUsuario'
 import Admin from '@/components/Admin'
 import EditarPerfil from '@/components/EditarPerfil'
+import ListarUsers from '@/components/ListarUsers'
 import DashAdmin from '@/components/DashAdmin'
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
@@ -56,6 +57,11 @@ export default new Router({
       path: '/dashboard',
       name: 'DashAdmin',
       component: DashAdmin
+    },
+    {
+      path: '/listar',
+      name: 'ListarUsers',
+      component: ListarUsers
     }
   ]
 })
