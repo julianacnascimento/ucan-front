@@ -9,7 +9,7 @@
       <b-dropdown
         split split-href="" text="Opções" class="m-2"
       >
-        <b-dropdown-item href="">Editar Perfil</b-dropdown-item>
+        <b-dropdown-item href="/perfil/editar/:id">Perfil</b-dropdown-item>
         <b-dropdown-item @click.prevent="logout()">Sair</b-dropdown-item>
       </b-dropdown>
     </div>
@@ -95,6 +95,12 @@ export default {
     logout: function () {
       localStorage.removeItem('token')
       this.$router.push({name: 'Home'})
+    },
+    botaoEditar: function () {
+      axios
+        .get('http://127.0.0.1/usuario/' + this.$route.params.id).then(response => {
+          this.usuario = response.data
+        })
     }
   }
 }

@@ -82,6 +82,7 @@ export default {
         this.usuario = response.data
         this.nome = this.usuario.nome
         this.email = this.usuario.email
+        alert(response.data.id)
       })
       .catch(e => {
         console.log('erro ao localizar ID de usuário')
@@ -90,12 +91,18 @@ export default {
   methods: {
     editUsuario: function () {
       const userId = this.$route.params.id
-      axios.put('http://127.0.0.1:3000/usuario/' + userId, {nome: this.usuario.nome, email: this.usuario.email})
-        .then(response => {
-          alert('Editado!')
-          this.$router.push({name: 'Perfil'})
-        })
-        .catch(e => { this.message = 'Erro no update de usuario!' }) //  na adição de usuário
+      if (this.nome !== null && this.email !== null) {
+        axios.put('http://127.0.0.1:3000/usuario/' + userId, {nome: this.usuario.nome, email: this.usuario.email})
+          .then(response => {
+            alert('Os dados de usuário foram modificados com sucesso!')
+          })
+          .catch(e => {
+            this.message = 'Erro no update de usuario!'
+            alert('Erro na edição de usuário')
+          }) //  na adição de usuário
+      } else {
+        alert('Não foi possível realizar as modificações!')
+      }
     },
     logout: function () {
       localStorage.removeItem('token')

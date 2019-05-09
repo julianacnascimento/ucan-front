@@ -16,24 +16,16 @@
           <b-col sm="auto"> -->
             <div align="center" class="mt-3">
               <b-tabs content-class="mt-3" align="center">
-                <b-tab title="Usuários" active>
+                <b-tab title="Usuários" active><p>Usuários</p>
                 <b-container align="center">
                   <div>
                     <template>
                       <div>
-                        <b-col cols="12" md="8">
-                          <div class="mt-3">
-                            <b-card-group deck>
-                              <b-card border-variant="primary" header="Usuários" align="center">
-                                <ul>
-                                  <li v-for="(usuario) in usuario" :key="usuario.id">
-                                    Id: {{usuario.id}} / Nome: {{usuario.nome}} / Email: {{usuario.email}} <b-button v-b-modal.modal-lg variant="danger" size="sm" @click.prevent="deletar(usuario.id, index)"> del </b-button>
-                                  </li>
-                                </ul>
-                              </b-card>
-                            </b-card-group>
-                          </div>
-                        </b-col>
+                          <ul>
+                            <li v-for="(usuario) in usuario" :key="usuario.id">
+                              Nome: {{usuario.nome}} / Email: {{usuario.email}} <b-button v-b-modal.modal-lg variant="danger" size="sm" @click.prevent="deletar(usuario.id, index)"> del </b-button>
+                            </li>
+                          </ul>
                       </div>
                     </template>
                   </div>
@@ -127,10 +119,6 @@ export default {
           alert('Usuário deletado!')
         })
         .catch(e => { console.log('erro na exclusão') })
-    },
-    logout: function () {
-      localStorage.removeItem('token')
-      this.$router.push({name: 'Admin'})
     }
   }
 }
